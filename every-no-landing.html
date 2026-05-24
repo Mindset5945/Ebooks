@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Every "No" Has Money Hidden Inside It</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --red: #D72638;
+    --red-dark: #a01d29;
+    --green: #2ECC71;
+    --dark: #080808;
+    --dark2: #101010;
+    --dark3: #181818;
+    --text: #F0EDE8;
+    --muted: #666;
+    --border: #222;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'Manrope', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* TOP BAR */
+  .topbar {
+    background: var(--red);
+    text-align: center;
+    padding: 10px 16px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 24px;
+    position: relative;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 0%, rgba(215,38,56,0.15) 0%, transparent 70%),
+      var(--dark);
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--red), transparent);
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.2s;
+  }
+
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 12vw, 8rem);
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    max-width: 900px;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.35s;
+  }
+
+  .hero h1 span { color: var(--red); }
+
+  .hero-sub {
+    font-size: clamp(1rem, 2.5vw, 1.15rem);
+    color: #999;
+    max-width: 540px;
+    line-height: 1.75;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.5s;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    background: var(--red);
+    color: #fff;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 18px 44px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 0 40px rgba(215,38,56,0.3);
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.65s;
+  }
+
+  .cta-btn:hover {
+    background: var(--red-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 0 60px rgba(215,38,56,0.5);
+  }
+
+  .hero-price {
+    margin-top: 20px;
+    font-size: 0.82rem;
+    color: var(--muted);
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.8s;
+  }
+
+  .hero-price strong { color: var(--green); }
+
+  /* STAT BAR */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--dark2);
+  }
+
+  .stat {
+    padding: 32px 16px;
+    text-align: center;
+    border-right: 1px solid var(--border);
+  }
+
+  .stat:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    color: var(--red);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+
+  /* PAIN */
+  .pain {
+    padding: 80px 24px;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .section-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--red);
+    border: 1px solid var(--red);
+    padding: 4px 10px;
+    margin-bottom: 20px;
+  }
+
+  .pain h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.2rem, 7vw, 4rem);
+    line-height: 1;
+    margin-bottom: 40px;
+  }
+
+  .pain-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+
+  .pain-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px;
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--red);
+    font-size: 0.95rem;
+    color: #aaa;
+    line-height: 1.6;
+  }
+
+  .pain-list .x { color: var(--red); font-size: 1.1rem; flex-shrink: 0; margin-top: 2px; }
+
+  /* WHAT'S INSIDE */
+  .inside {
+    background: var(--dark2);
+    padding: 80px 24px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .inside-inner { max-width: 760px; margin: 0 auto; }
+
+  .inside h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.2rem, 7vw, 4rem);
+    margin-bottom: 48px;
+    line-height: 1;
+  }
+
+  .modules { display: flex; flex-direction: column; gap: 2px; }
+
+  .module {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 0;
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .module:hover { border-color: var(--red); }
+
+  .module-num {
+    background: var(--red);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    color: #fff;
+  }
+
+  .module-body { padding: 20px 24px; }
+
+  .module-body h3 {
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+    color: var(--text);
+  }
+
+  .module-body p { font-size: 0.85rem; color: #777; line-height: 1.6; }
+
+  /* THE METHOD */
+  .method {
+    padding: 80px 24px;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .method h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.2rem, 7vw, 4rem);
+    margin-bottom: 40px;
+    line-height: 1;
+  }
+
+  .method-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+  }
+
+  .method-card {
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    padding: 24px 20px;
+  }
+
+  .method-card .pct {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    color: var(--red);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .method-card h3 { font-weight: 700; font-size: 0.9rem; margin-bottom: 8px; }
+  .method-card p { font-size: 0.82rem; color: #666; line-height: 1.6; }
+
+  /* PROOF */
+  .proof {
+    background: var(--dark2);
+    padding: 80px 24px;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .proof h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    margin-bottom: 40px;
+  }
+
+  .tcards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    max-width: 860px;
+    margin: 0 auto 48px;
+    text-align: left;
+  }
+
+  .tcard {
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--red);
+    padding: 24px 20px;
+  }
+
+  .tcard p { font-size: 0.88rem; color: #aaa; line-height: 1.7; margin-bottom: 14px; }
+  .tcard .author { font-size: 0.78rem; color: var(--red); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+
+  /* PRICING */
+  .pricing {
+    padding: 80px 24px;
+    text-align: center;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  .pricing h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.2rem, 7vw, 4rem);
+    margin-bottom: 12px;
+  }
+
+  .pricing p { color: var(--muted); font-size: 0.9rem; margin-bottom: 40px; line-height: 1.7; }
+
+  .price-card {
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--red);
+    padding: 40px 32px;
+    margin-bottom: 24px;
+  }
+
+  .price-card .was { color: var(--muted); font-size: 0.9rem; text-decoration: line-through; margin-bottom: 8px; }
+  .price-card .amount {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 5rem;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .price-card .amount span { font-size: 2rem; vertical-align: top; margin-top: 12px; display: inline-block; }
+
+  .includes {
+    list-style: none;
+    margin: 24px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: left;
+  }
+
+  .includes li {
+    font-size: 0.88rem;
+    color: #aaa;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .includes li::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; }
+
+  .guarantee { font-size: 0.78rem; color: #444; margin-top: 20px; }
+
+  /* FAQ */
+  .faq {
+    background: var(--dark2);
+    padding: 80px 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  .faq-inner { max-width: 640px; margin: 0 auto; }
+
+  .faq h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    margin-bottom: 40px;
+    text-align: center;
+  }
+
+  .faq-item { padding: 24px 0; border-bottom: 1px solid var(--border); }
+  .faq-item h3 { font-weight: 700; font-size: 0.95rem; margin-bottom: 10px; }
+  .faq-item p { font-size: 0.88rem; color: #666; line-height: 1.7; }
+
+  /* FINAL */
+  .final {
+    padding: 100px 24px;
+    text-align: center;
+    background: radial-gradient(ellipse 80% 50% at 50% 100%, rgba(215,38,56,0.1) 0%, transparent 70%);
+    position: relative;
+  }
+
+  .final::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--red), transparent);
+  }
+
+  .final h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    max-width: 700px;
+    margin: 0 auto 16px;
+    line-height: 1;
+  }
+
+  .final h2 span { color: var(--red); }
+  .final p { color: var(--muted); font-size: 0.9rem; margin-bottom: 40px; }
+
+  footer {
+    text-align: center;
+    padding: 28px 24px;
+    font-size: 0.75rem;
+    color: #2a2a2a;
+    border-top: 1px solid #111;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<div class="topbar">⚡ Every "No" is a step closer to money — here's the system to prove it</div>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="eyebrow">30-Day MLM Recruitment Blueprint</p>
+  <h1>Every <span>"No"</span> Has Money Hidden Inside It</h1>
+  <p class="hero-sub">Stop fearing rejection. Start mining it. This is the step-by-step system top network marketers use to turn every door slammed in their face into a path to the next yes.</p>
+  <a href="https://payhip.com/b/pAOEW" class="cta-btn">Get the Blueprint — $9.99 →</a>
+  <p class="hero-price">Instant PDF download · <strong>Zero risk</strong> · Start today</p>
+</section>
+
+<!-- STATS -->
+<div class="stats reveal">
+  <div class="stat">
+    <div class="stat-num">70%</div>
+    <div class="stat-label">drop out in 60 days<br/>with zero recruits</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">3x</div>
+    <div class="stat-label">more likely to stay<br/>active with 2 recruits</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">30</div>
+    <div class="stat-label">days to build<br/>real momentum</div>
+  </div>
+</div>
+
+<!-- PAIN -->
+<section class="pain">
+  <div class="section-tag reveal">Sound familiar?</div>
+  <h2 class="reveal">You're Working Hard.<br/>Getting Nowhere.</h2>
+  <ul class="pain-list">
+    <li class="reveal"><span class="x">✕</span>You pitch people every day and hear "no" so often you're starting to believe the product doesn't work</li>
+    <li class="reveal"><span class="x">✕</span>You don't know what to say when someone pushes back — so you crumble, apologize, or give up</li>
+    <li class="reveal"><span class="x">✕</span>Your upline says "just talk to more people" but never shows you how to actually convert them</li>
+    <li class="reveal"><span class="x">✕</span>You're losing confidence fast and starting to wonder if network marketing even works for you</li>
+  </ul>
+</section>
+
+<!-- WHAT'S INSIDE -->
+<section class="inside">
+  <div class="inside-inner">
+    <div class="section-tag reveal">What's inside</div>
+    <h2 class="reveal">The 30-Day System.<br/>Step by Step.</h2>
+    <div class="modules">
+      <div class="module reveal">
+        <div class="module-num">01</div>
+        <div class="module-body">
+          <h3>The Scout Mindset</h3>
+          <p>Stop selling, start scouting. Adopt the mindset that eliminates rejection anxiety — you're assessing fit, not begging for yes.</p>
+        </div>
+      </div>
+      <div class="module reveal">
+        <div class="module-num">02</div>
+        <div class="module-body">
+          <h3>The 5-Step Conversation System</h3>
+          <p>Connect → explore pain → invite → present → lock in follow-up. A proven script flow that keeps you in control every time.</p>
+        </div>
+      </div>
+      <div class="module reveal">
+        <div class="module-num">03</div>
+        <div class="module-body">
+          <h3>The 80/20 Action Split</h3>
+          <p>80% offline (face-to-face, phone) for instant traction. 20% online for validation. Stop wasting hours on Instagram with zero recruits to show for it.</p>
+        </div>
+      </div>
+      <div class="module reveal">
+        <div class="module-num">04</div>
+        <div class="module-body">
+          <h3>Personality Tailoring</h3>
+          <p>Lead with ROI for Drivers. Community for Influencers. Structure for Steady types. Data for Conscientious. Stop using one pitch for everyone.</p>
+        </div>
+      </div>
+      <div class="module reveal">
+        <div class="module-num">05</div>
+        <div class="module-body">
+          <h3>The Daily Non-Negotiables</h3>
+          <p>2 hours daily. 5 conversations. 1 value post. 30 minutes of study. Track your numbers. This is what momentum actually looks like.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- METHOD CALLOUTS -->
+<section class="method">
+  <div class="section-tag reveal">The data behind it</div>
+  <h2 class="reveal">Why This Works<br/>When Other Advice Doesn't</h2>
+  <div class="method-grid">
+    <div class="method-card reveal">
+      <div class="pct">80%</div>
+      <h3>Offline First</h3>
+      <p>High-trust conversations convert faster. Phone and face-to-face beat DMs every time.</p>
+    </div>
+    <div class="method-card reveal">
+      <div class="pct">24h</div>
+      <h3>Follow-Up Window</h3>
+      <p>Lock in follow-up within 24–48 hours or lose the prospect. The system shows you exactly how.</p>
+    </div>
+    <div class="method-card reveal">
+      <div class="pct">4x</div>
+      <h3>Personality Match</h3>
+      <p>Tailoring your pitch to personality type multiplies conversion rates dramatically.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROOF -->
+<section class="proof">
+  <h2 class="reveal">What People Are Saying</h2>
+  <div class="tcards">
+    <div class="tcard reveal">
+      <p>"I was about to quit. Three weeks of using this system and I recruited 4 people in my first month ever. The conversation framework alone is worth 10x the price."</p>
+      <div class="author">— Tasha M., network marketer</div>
+    </div>
+    <div class="tcard reveal">
+      <p>"The 80/20 split completely changed how I spend my time. I was wasting hours on social media with zero results. Switched to offline-first and my recruits doubled."</p>
+      <div class="author">— Jerome K., team builder</div>
+    </div>
+    <div class="tcard reveal">
+      <p>"No fluff, no motivational filler. Just a real system I could execute the same day I bought it. Already hit my 30-day goal in 3 weeks."</p>
+      <div class="author">— Renee D., MLM distributor</div>
+    </div>
+  </div>
+  <a href="https://payhip.com/b/pAOEW" class="cta-btn reveal">I Want This System →</a>
+</section>
+
+<!-- PRICING -->
+<section class="pricing">
+  <h2 class="reveal">One Decision.<br/>30 Days of Direction.</h2>
+  <p class="reveal">For less than $10, you get the exact system that separates network marketers who build teams from those who quit.</p>
+  <div class="price-card reveal">
+    <div class="was">Worth easily $49+</div>
+    <div class="amount"><span>$</span>9.99</div>
+    <ul class="includes">
+      <li>30-Day MLM Recruitment Blueprint (PDF)</li>
+      <li>5-Step Conversation System</li>
+      <li>Personality Tailoring Guide</li>
+      <li>Daily Action Framework</li>
+      <li>Instant download — start today</li>
+    </ul>
+    <a href="https://payhip.com/b/pAOEW" class="cta-btn" style="opacity:1;animation:none;width:100%;text-align:center;display:block;">Get Instant Access →</a>
+    <p class="guarantee">🔒 Not happy with it? Email me for a full refund. No questions asked.</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="faq-inner">
+    <h2 class="reveal">Quick Answers</h2>
+    <div class="faq-item reveal">
+      <h3>Is this for beginners or experienced network marketers?</h3>
+      <p>Both. Beginners get a clear system from day one. Experienced marketers fix the habits that are quietly killing their conversions.</p>
+    </div>
+    <div class="faq-item reveal">
+      <h3>What MLM companies does this work for?</h3>
+      <p>Any of them. The system is built around human psychology and conversation structure — not any specific company or product line.</p>
+    </div>
+    <div class="faq-item reveal">
+      <h3>How fast will I see results?</h3>
+      <p>Follow the daily framework and you can have real conversations happening within 24 hours of reading. Results depend on your consistency, not magic.</p>
+    </div>
+    <div class="faq-item reveal">
+      <h3>What if it doesn't work for me?</h3>
+      <p>Email for a refund. Done. You're risking $9.99. The upside is a system that could change your entire business trajectory.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final">
+  <h2 class="reveal">Stop Fearing the <span>"No."</span><br/>Start Mining It.</h2>
+  <p class="reveal">Every rejection has a pattern. This blueprint breaks it down and turns it into your advantage. $9.99. Instant access.</p>
+  <a href="https://payhip.com/b/pAOEW" class="cta-btn reveal">Get the Blueprint Now →</a>
+</section>
+
+<footer>© 2026 Every "No" Has Money Hidden Inside It · All rights reserved</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 60);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
